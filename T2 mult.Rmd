@@ -1,8 +1,11 @@
 ---
 title: "Análise Multivariada - Trabalho 2"
-author: "Pedro de Oliveira Macedo"
+author: "Cássio Ritzel, Gabriel Varani Martinewski, Pedro de Oliveira Macedo"
 date: '2023-09-10'
-output: html_document
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
 ---
 
 ```{r setup, include=FALSE}
@@ -15,6 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 dados_originais <- read.csv("spotify_data.csv")
 aux <- sample(1:nrow(dados_originais), size=nrow(dados_originais)*0.005)
 dados <- dados_originais[aux,-c(1:4)]
+wines <- dados[,-c(2,3,6,8,16)]
 #variaveis categoricas: c(2,3,6,8,16)
 ```
 
@@ -171,7 +175,7 @@ ggplotly(ggplot(data = dados, aes(x = duration_ms)) +
 
 
 
-## Time Signature
+### Time Signature
 
 ```{r}
 ggplotly(ggplot(data = dados, aes(x = time_signature)) +
@@ -231,6 +235,15 @@ library(d3heatmap)
 d3heatmap(scale(wines), colors = "RdYlBu")
 
 ```
+
+
+## Dendograma
+
+```{r}
+hc <- eclust(wines, "hclust", hc_metric = "euclidian", hc_method = "ward.D")
+fviz_dend(hc, rect = TRUE)
+```
+
 
 ## K-Means Clustering
 
