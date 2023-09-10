@@ -1,0 +1,43 @@
+---
+title: "Análise Multivariada - Trabalho 2"
+author: "Pedro de Oliveira Macedo"
+date: '2023-09-10'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Carregar dados
+
+```{r}
+dados_originais <- read.csv("spotify_data.csv")
+aux <- sample(1:nrow(dados_originais), size=nrow(dados_originais)*0.005)
+dados <- dados_originais[aux,-c(1:4)]
+#variaveis categoricas: c(2,3,6,8,16)
+```
+
+## Carregar pacotes
+
+```{r, message=F, warning=F}
+library(dplyr)
+library(ggplot2)
+library(GGally)
+library(corrplot)
+```
+
+
+## Descritiva
+
+```{r}
+corrplot(cor(dados[,-c(2,3,6,8,16)]))
+```
+Espera-se que as variáveis acousticness, energy, loudness e valence sejam cruciais no agrupamento de observações.
+
+
+
+
+
+
+
