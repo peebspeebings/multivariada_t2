@@ -103,7 +103,6 @@ O primeiro cluster tem 4477 (0.77%) observações, enquanto que o segundo tem 13
 aggregate(dados[,-c(2,3,6,8,16)], by=list(dados_k2$cluster), mean)
 ```
 
-O algoritmo subdividiu a amostra de forma que o primeiro grupo tenha maior popularity, danceability, energy, loudness, speechiness, liveness, valence e tempo. As durações das músicas foram similares para ambos clusters.
 
 ### Otimizando k
 
