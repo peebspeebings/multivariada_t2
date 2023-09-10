@@ -84,7 +84,6 @@ d3heatmap(scale(wines), colors = "RdYlBu")
 
 ## K-Means Clustering
 
-### k=2
 ```{r}
 # normalização das variáveis 
 dadosNorm <- as.data.frame(scale(dados[,-c(2,3,6,8,16)]))
@@ -95,7 +94,16 @@ dados_k2 <- kmeans(dadosNorm, centers = 2)
 
 ```{r}
 dados_k2$size
+dados_k2$size/nrow(dados)
 ```
+O primeiro cluster tem 4477 (0.77%) observações, enquanto que o segundo tem 1321 (0.23%).
+
+
+```{r}
+aggregate(dados[,-c(2,3,6,8,16)], by=list(dados_k2$cluster), mean)
+```
+
+
 ### Otimizando k
 
 ```{r, warning=F}
@@ -128,3 +136,11 @@ p4 <- qplot(1:10, wss, geom=c("point", "line"),
 # Subplot
 grid.arrange(p3, p4, ncol=2)
 ```
+A partir das somas de quadrados, 2 ou 3 clusters seriam ideais. O ganho da inclusão de mais clusters é em geral similar, com exceção à diferença entre 6 e 7 clusters.
+
+### Plots
+
+```{r}
+
+```
+
