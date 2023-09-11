@@ -12,6 +12,28 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Objetivo
+
+O objetivo desse trabalho é analisar o banco de dados “Spotify_1Million_Tracks”, realizando uma análise descritiva deles, e analisar os métodos de cluster, ajustando dendrogramas para suas observações e variáveis. Além disso, também observar o efeito do número de clusters no método k-means para o banco.
+
+O banco contém dados de 1 milhão de músicas que foram extraídos do Spotify utilizando a biblioteca “Spotipy” do Python. Para cada música na plataforma, o Spotify guarda dados para 13 parâmetros: \
+Danceability - Dançabilidade, o quão dançável é a música baseado no ritmo, tempo e etc. \
+Valence - Valência, a positividade expressada pela música. \
+Energy - Energia, que representa a intensidade e atividade da música no geral. \
+Tempo - O tempo estimado da música em BPM (batidas por minuto). \
+Loudness - O quão alta, ou barulhenta, é a música em decibéis. \
+Speechiness - A presença de fala na música. \
+Instrumentalness - A presença de instrumental na música. \
+Liveness - Detecção da presença de audiência. \
+Acousticness - Uma métrica do quão acústica é a música. \
+Mode - A escala em que está a música, 1= Maior e 0 = Menor. \
+Duration - A duração da música em milisegundos. \
+Time Signature - O compasso da música por 4. \
+Key - O tom que a música foi escrita \
+Popularity - Uma métrica de popularidade da faixa \
+
+O banco guarda esses parâmetros juntamente com artista, gênero musical e o id da faixa
+
 ## Carregar dados
 
 ```{r}
