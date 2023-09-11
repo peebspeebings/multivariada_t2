@@ -1,6 +1,6 @@
 ---
-title: "Análise Multivariada - Trabalho 2"
-author: "Cássio Ritzel, Gabriel Varani Martinewski, Pedro de Oliveira Macedo"
+title: "Analise Multivariada - Trabalho 2"
+author: "Cassio Ritzel, Gabriel Varani Martinewski, Pedro de Oliveira Macedo"
 date: '2023-09-10'
 output: 
   html_document:
@@ -18,7 +18,9 @@ knitr::opts_chunk$set(echo = TRUE)
 dados_originais <- read.csv("spotify_data.csv")
 aux <- sample(1:nrow(dados_originais), size=nrow(dados_originais)*0.005)
 dados <- dados_originais[aux,-c(1:4)]
-wines <- dados[,-c(2,3,6,8,16)]
+
+dados2 <- dados[dados$year==2022,]
+wines <- dados2[,-c(2,3,6,8,16)]
 #variaveis categoricas: c(2,3,6,8,16)
 ```
 
@@ -40,7 +42,7 @@ library(plotly)
 ### Popularity
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = popularity)) +
+ggplotly(ggplot(data = dados2, aes(x = popularity)) +
   geom_histogram(color = "black", fill = "steelblue") +
   labs(x = 'Popularidade'))
 ```
@@ -48,7 +50,7 @@ ggplotly(ggplot(data = dados, aes(x = popularity)) +
 ### Year
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = year)) +
+ggplotly(ggplot(data = dados2, aes(x = year)) +
   geom_bar(color = "black", fill = "steelblue") +
   labs(x = 'Ano'))
 ```
@@ -57,70 +59,70 @@ ggplotly(ggplot(data = dados, aes(x = year)) +
 ### Danceability
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = danceability)) +
+ggplotly(ggplot(data = dados2, aes(x = danceability)) +
   geom_histogram(color = "black", fill = "steelblue") +
-  labs(x = 'Dançabilidade',y="Frequência"))
+  labs(x = 'Dançabilidade',y="Frequencia"))
 ```
 
 
 ### Energy
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = energy)) +
+ggplotly(ggplot(data = dados2, aes(x = energy)) +
   geom_histogram(color = "black", fill = "steelblue") +
-  labs(x = 'Energia'),y="Frequência")
+  labs(x = 'Energia'),y="Frequencia")
 ```
 
 
 ### Key
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = key)) +
+ggplotly(ggplot(data = dados2, aes(x = key)) +
              geom_bar(color = "black", fill = "steelblue") +
              scale_x_continuous(breaks=seq(0,11,by=1),labels = c("C","C#","D","D#","E","F","F#","G","G#","A","A#","B")) +
              scale_y_continuous(breaks=seq(0,150000,by=25000),labels=c("0","25","50","75","100","125","150")) +
-             labs(x = 'Tom',y='Frequência em milhares'))
+             labs(x = 'Tom',y='Frequencia'))
 ```
 
 ### Loudness
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = loudness)) +
+ggplotly(ggplot(data = dados2, aes(x = loudness)) +
              geom_histogram(color = "black", fill = "steelblue") +
              scale_x_continuous(breaks=seq(15,60,by=5)) +
              scale_y_continuous(breaks=seq(0,300000,by=50000),labels=c("0","50","100","150","200","250","300")) +
-             labs(x = 'Decibéis',y = 'Frequência em milhares'))
+             labs(x = 'Decibéis',y = 'Frequencia'))
 ```
 
 
 ### Mode
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = mode)) +
+ggplotly(ggplot(data = dados2, aes(x = mode)) +
   geom_bar(color = "black", fill = "steelblue") +
   scale_x_continuous(breaks = c(0,1),labels = c("Menor","Maior")) +
   scale_y_continuous(breaks=seq(0,700000,by=100000),labels=c("0","100","200","300","400","500","600","700")) +
-  labs(x = 'Escala',y = 'Frequência em milhares'))
+  labs(x = 'Escala',y = 'Frequencia'))
 ```
 
 
 ### Speechiness
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = speechiness)) +
+ggplotly(ggplot(data = dados2, aes(x = speechiness)) +
              geom_histogram(color = "black", fill = "steelblue") +
              scale_y_continuous(breaks=seq(0,600000,by=100000),labels=c("0","100","200","300","400","500","600")) +
-             labs(x = 'Fala',y = 'Frequência em milhares'))
+             labs(x = 'Fala',y = 'Frequencia'))
 ```
 
 
 ### Acousticness
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = acousticness)) +
+ggplotly(ggplot(data = dados2, aes(x = acousticness)) +
              geom_histogram(color = "black", fill = "steelblue") +
              scale_y_continuous(breaks=seq(0,400000,by=100000),labels=c("0","100","200","300","400")) +
-             labs(x = 'Acusticidade',y="Frequência em milhares"))
+             labs(x = 'Acusticidade',y="Frequencia"))
 ```
 
 
@@ -128,29 +130,29 @@ ggplotly(ggplot(data = dados, aes(x = acousticness)) +
 ### Instrumentalness
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = instrumentalness)) +
+ggplotly(ggplot(data = dados2, aes(x = instrumentalness)) +
   geom_histogram(color = "black", fill = "steelblue") +
     scale_y_continuous(breaks=seq(0,700000,by=100000),labels=c("0","100","200","300","400","500","600","700")) +
-    labs(x = 'Instrumentalidade',y="Frequência em milhares"))
+    labs(x = 'Instrumentalidade',y="Frequencia"))
 ```
 
 
 ### Liveness
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = liveness)) +
+ggplotly(ggplot(data = dados2, aes(x = liveness)) +
              geom_histogram(color = "black", fill = "steelblue") +
              scale_y_continuous(breaks=seq(0,300000,by=100000),labels=c("0","100","200","300")) +
-             labs(x="Presença de audiência",y="Frequência em milhares"))
+             labs(x="Presença de audiência",y="Frequencia"))
 ```
 
 
 ### Valence
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = valence)) +
+ggplotly(ggplot(data = dados2, aes(x = valence)) +
   geom_histogram(color = "black", fill = "steelblue") +
-    labs(x="Valência",y="Frequência"))
+    labs(x="Valência",y="Frequencia"))
 ```
 
 
@@ -158,19 +160,19 @@ ggplotly(ggplot(data = dados, aes(x = valence)) +
 ### Tempo
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = tempo)) +
+ggplotly(ggplot(data = dados2, aes(x = tempo)) +
               geom_histogram(color = "black", fill = "steelblue") +
-              labs(x = 'Bpm',y='Frequência'))
+              labs(x = 'Bpm',y='Frequencia'))
 ```
 
 
 ### Duration
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = duration_ms)) +
+ggplotly(ggplot(data = dados2, aes(x = duration_ms)) +
   geom_histogram(color = "black", fill = "steelblue") +
   xlim(c(0,1e+06)) +
-  labs(x = 'Duração',y="Frequência"))
+  labs(x = 'Duração',y="Frequencia"))
 ```
 
 
@@ -178,10 +180,10 @@ ggplotly(ggplot(data = dados, aes(x = duration_ms)) +
 ### Time Signature
 
 ```{r}
-ggplotly(ggplot(data = dados, aes(x = time_signature)) +
+ggplotly(ggplot(data = dados2, aes(x = time_signature)) +
   geom_bar(color = "black", fill = "steelblue") +
   scale_x_continuous(breaks=seq(0,7,by=1)) +
-  labs(x = 'Compasso',y="Frequência"))
+  labs(x = 'Compasso',y="Frequencia"))
 ```
 
 
@@ -197,7 +199,7 @@ corrplot(cor(dados[,-c(2,3,6,8,16)]))
 ### Distancia pearson
 
 ```{r}
-res.dist <- get_dist(dados[,-c(2,3,6,8,16)], method = "pearson") # Correlation-based distance method
+res.dist <- get_dist(dados2[,-c(2,3,6,8,16)], method = "pearson") # Correlation-based distance method
 fviz_dist(res.dist, lab_size = 8) # Visualize the dissimilarity matrix
 ```
 
@@ -240,8 +242,10 @@ d3heatmap(scale(wines), colors = "RdYlBu")
 ## Dendograma
 
 ```{r}
-hc <- eclust(wines, "hclust", hc_metric = "euclidian", hc_method = "ward.D")
+hc <- eclust(wines, "hclust", hc_metric = "euclidian", hc_method = "ward.D", k=100)
 fviz_dend(hc, rect = TRUE)
+
+fviz_dend(hclust(dist(wines)))
 ```
 
 
@@ -249,7 +253,7 @@ fviz_dend(hc, rect = TRUE)
 
 ```{r}
 # normalização das variáveis 
-dadosNorm <- as.data.frame(scale(dados[,-c(2,3,6,8,16)]))
+dadosNorm <- as.data.frame(scale(dados2[,-c(2,3,6,8,16)]))
 
 set.seed(1234)
 dados_k2 <- kmeans(dadosNorm, centers = 2)
@@ -263,7 +267,7 @@ O primeiro cluster tem 4477 (0.77%) observações, enquanto que o segundo tem 13
 
 
 ```{r}
-aggregate(dados[,-c(2,3,6,8,16)], by=list(dados_k2$cluster), mean)
+aggregate(dados2[,-c(2,3,6,8,16)], by=list(dados_k2$cluster), mean)
 ```
 
 
@@ -299,7 +303,7 @@ p4 <- qplot(1:10, wss, geom=c("point", "line"),
 # Subplot
 grid.arrange(p3, p4, ncol=2)
 ```
-A partir das somas de quadrados, 2 ou 3 clusters seriam ideais. O ganho da inclusão de mais clusters é em geral similar, com exceção à diferença entre 6 e 7 clusters.
+A partir das somas de quadrados, 2 ou 3 clusters seriam ideais. O ganho da inclusao de mais clusters e em geral similar, com excecao a diferença entre 6 e 7 clusters.
 
 ### Plots
 
