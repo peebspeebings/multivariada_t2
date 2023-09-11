@@ -20,7 +20,7 @@ aux <- sample(1:nrow(dados_originais), size=nrow(dados_originais)*0.005)
 dados <- dados_originais[aux,-c(1:4)]
 
 dados2 <- dados[dados$year==2022,]
-wines <- dados2[,-c(2,3,6,8,16)]
+dados3 <- dados2[,-c(2,3,6,8,16)]
 #variaveis categoricas: c(2,3,6,8,16)
 ```
 
@@ -188,9 +188,11 @@ ggplotly(ggplot(data = dados2, aes(x = time_signature)) +
 
 
 ### Correlação
+
 ```{r}
-corrplot(cor(dados[,-c(2,3,6,8,16)]))
+corrplot(cor(dados3))
 ```
+A variável acousticness tem alta correlação negativa com as variáveis energy e loudness, indicando que músicas acústicas tendem a não serem energéticas e altas. A variável valence tem alta correlação positiva com a variável danceability, o que implica que músicas dançáveis são mais positivas. Também, temos correlações menores entre loudness e instrumentalness (negativa) e acousticness e tempo (negativa).
 
 
 
@@ -199,7 +201,7 @@ corrplot(cor(dados[,-c(2,3,6,8,16)]))
 ### Distancia pearson
 
 ```{r}
-res.dist <- get_dist(dados2[,-c(2,3,6,8,16)], method = "pearson") # Correlation-based distance method
+res.dist <- get_dist(dados3, method = "pearson") # Correlation-based distance method
 fviz_dist(res.dist, lab_size = 8) # Visualize the dissimilarity matrix
 ```
 
@@ -207,7 +209,7 @@ fviz_dist(res.dist, lab_size = 8) # Visualize the dissimilarity matrix
 
 ```{r}
 
-res.dist2 <- get_dist(wines, method = "euclidian") # Correlation-based distance method
+res.dist2 <- get_dist(dados3, method = "euclidian") # Correlation-based distance method
 fviz_dist(res.dist2, lab_size = 8) # Visualize the dissimilarity matrix
 ```
 
@@ -215,7 +217,7 @@ fviz_dist(res.dist2, lab_size = 8) # Visualize the dissimilarity matrix
 
 ```{r}
 
-res.dist3 <- get_dist(wines, method = "manhattan") # Correlation-based distance method
+res.dist3 <- get_dist(dados3, method = "manhattan") # Correlation-based distance method
 fviz_dist(res.dist3, lab_size = 8) # Visualize the dissimilarity matrix
 ```
 
@@ -223,52 +225,59 @@ fviz_dist(res.dist3, lab_size = 8) # Visualize the dissimilarity matrix
 
 ```{r}
 
-res.dist4 <- get_dist(wines, method = "minkowski") # Correlation-based distance method
+res.dist4 <- get_dist(dados3, method = "minkowski") # Correlation-based distance method
 fviz_dist(res.dist4, lab_size = 8) # Visualize the dissimilarity matrix
 
 ```
 
-### Grafico interativo
+
+
+## Dendograma para Observações
+
+```{r}
+hc <- eclust(dados3, "hclust", hc_metric = "euclidean", hc_method = "ward.D", k=100)
+fviz_dend(hc, rect = TRUE, k=3, show_labels=FALSE)
+```
+A amostra apresenta clara distinção para 2 ou 3 grupos.
+
+
+## Dendrograma para Variáveis
 
 ```{r}
 
-#install.packages("d3heatmap")
-library(d3heatmap)
-d3heatmap(scale(wines), colors = "RdYlBu")
-
 ```
 
-
-## Dendograma
-
-```{r}
-hc <- eclust(wines, "hclust", hc_metric = "euclidian", hc_method = "ward.D", k=100)
-fviz_dend(hc, rect = TRUE)
-
-fviz_dend(hclust(dist(wines)))
-```
 
 
 ## K-Means Clustering
 
 ```{r}
 # normalização das variáveis 
-dadosNorm <- as.data.frame(scale(dados2[,-c(2,3,6,8,16)]))
+dadosNorm <- as.data.frame(scale(dados3))
 
 set.seed(1234)
-dados_k2 <- kmeans(dadosNorm, centers = 2)
+dados_k2 <- kmeans(dadosNorm, centers = 3)
 ```
 
 ```{r}
 dados_k2$size
-dados_k2$size/nrow(dados)
+dados_k2$size/nrow(dados3)
 ```
-O primeiro cluster tem 4477 (0.77%) observações, enquanto que o segundo tem 1321 (0.23%).
+
+O primeiro cluster tem 187 (70%) observações, enquanto que o segundo tem 22 (8%) e o terceiro 59 (22%).
 
 
 ```{r}
-aggregate(dados2[,-c(2,3,6,8,16)], by=list(dados_k2$cluster), mean)
+aggregate(dados3, by=list(dados_k2$cluster), mean)
 ```
+
+Estas foram as principais características de cada cluster:
+
+Primeiro - Maior popularidade, dançabilidade, volume, positividade, tempo e duração. Também, esse grupo apresentou menor acusticidade, poucas letras e alta energia. Isso implica que a amostra apresenta um grupo de músicas mais populares, com maior volume, mais positivas e mais dançáveis, que também contém menos elementos acústicos.
+
+Segundo - Menor popularidade, dançabilidade e instrumentalidade, bem como mais letras e mais "liveness" (aspectos de músicas performadas ao vivo).
+
+Terceiro - Menor energia, volume, "liveness", valence, tempo, duração e menos letras. Além de maior acusticidade e instrumentalidade. Esse grupo aparenta conter músicas mais tristes e acústicas.
 
 
 ### Otimizando k
@@ -303,10 +312,6 @@ p4 <- qplot(1:10, wss, geom=c("point", "line"),
 # Subplot
 grid.arrange(p3, p4, ncol=2)
 ```
-A partir das somas de quadrados, 2 ou 3 clusters seriam ideais. O ganho da inclusao de mais clusters e em geral similar, com excecao a diferença entre 6 e 7 clusters.
 
-### Plots
+A partir das somas de quadrados, 2 ou 3 clusters seriam ideais. O ganho da inclusao de mais clusters é em geral similar, com exceção da diferença entre 6 e 7 clusters.
 
-```{r}
-
-```
