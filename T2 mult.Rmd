@@ -244,7 +244,15 @@ A amostra apresenta clara distinção para 2 ou 3 grupos.
 ## Dendrograma para Variáveis
 
 ```{r}
+var_cat <- dados2[,c(3,6,8,16)]
 
+for (i in (1:4)) {
+  var_cat[, i] <- factor(var_cat[, i])
+}
+
+library(ClustOfVar)
+tree <- hclustvar(dados3, var_cat)
+plot(tree)
 ```
 
 
@@ -314,4 +322,3 @@ grid.arrange(p3, p4, ncol=2)
 ```
 
 A partir das somas de quadrados, 2 ou 3 clusters seriam ideais. O ganho da inclusao de mais clusters é em geral similar, com exceção da diferença entre 6 e 7 clusters.
-
