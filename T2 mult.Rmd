@@ -192,6 +192,7 @@ ggplotly(ggplot(data = dados2, aes(x = time_signature)) +
 ```{r}
 corrplot(cor(dados3))
 ```
+
 A variável acousticness tem alta correlação negativa com as variáveis energy e loudness, indicando que músicas acústicas tendem a não serem energéticas e altas. A variável valence tem alta correlação positiva com a variável danceability, o que implica que músicas dançáveis são mais positivas. Também, temos correlações menores entre loudness e instrumentalness (negativa) e acousticness e tempo (negativa).
 
 
@@ -238,6 +239,7 @@ fviz_dist(res.dist4, lab_size = 8) # Visualize the dissimilarity matrix
 hc <- eclust(dados3, "hclust", hc_metric = "euclidean", hc_method = "ward.D", k=100)
 fviz_dend(hc, rect = TRUE, k=3, show_labels=FALSE)
 ```
+
 A amostra apresenta clara distinção para 2 ou 3 grupos.
 
 
